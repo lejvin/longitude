@@ -16,6 +16,16 @@
   # Use polkit
   security.polkit.enable = true;
 
+
+  # Enable pipewire
+  security.rtkit.enable = true;
+
+  services.pipewire = {
+	enable = true;
+	alsa.enable = true;
+	pulse.enable = true;
+  };
+
   fonts.enableDefaultPackages = true;
 
   # Enable hardware graphics
