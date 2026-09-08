@@ -61,7 +61,7 @@
       };
       output = {
         "*" = {
-          bg = "${./wallpaper.png} fill";
+          bg = "${./wallpaper.jpg} fill";
         };
         "eDP-1" = {
           mode = "1920x1080";
