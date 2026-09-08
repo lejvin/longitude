@@ -16,6 +16,20 @@
   # Use polkit
   security.polkit.enable = true;
 
+  programs.dconf.enable = true;
+
+  # Expose the desktop appearance preference to portal-aware applications.
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.sway = {
+      default = [ "gtk" ];
+      "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+      "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+    };
+  };
+
 
   # Enable pipewire
   security.rtkit.enable = true;

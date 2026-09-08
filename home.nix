@@ -5,6 +5,32 @@
   home.username = "lukas";
   home.homeDirectory = "/home/lukas";
 
+  gtk = {
+    enable = true;
+    colorScheme = "dark";
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme.name = "gtk3";
+    style.name = "adwaita-dark";
+  };
+
+  # Keep a warm screen tint all day, without requiring location access.
+  services.wlsunset = {
+    enable = true;
+    latitude = 63.8;
+    longitude = 20.3;
+    temperature = {
+      day = 5000;
+      night = 4000;
+    };
+  };
+
   # Enable sway window manager
   wayland.windowManager.sway = {
     enable = true;
@@ -41,6 +67,18 @@
           mode = "1920x1080";
           scale = "1.1";
         };
+      };
+    };
+  };
+
+  programs.i3status.enable = true;
+  programs.i3status.modules = {
+    "volume master" = {
+      position = 0;
+      settings = {
+        device = "pulse";
+        format = "♪ %volume";
+        format_muted = "♪ muted (%volume)";
       };
     };
   };
