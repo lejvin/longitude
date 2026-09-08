@@ -17,6 +17,13 @@
 			"XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
 			"XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
 			"XF86AudioLowerVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+			"XF86AudioMute" = "exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+			"XF86AudioMicMute" = "exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+			"XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+			"XF86AudioPause" = "exec ${pkgs.playerctl}/bin/playerctl pause";
+			"XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+			"XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
+			"XF86AudioStop" = "exec ${pkgs.playerctl}/bin/playerctl stop";
 		};
 		window = {
 			titlebar = false;
