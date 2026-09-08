@@ -59,6 +59,11 @@ programs.firefox = {
 	enable = true;
 };
 
+programs.helix = {
+	enable = true;
+	defaultEditor = true;
+};
+
 programs.git = {
 	enable = true;
 	settings = {
