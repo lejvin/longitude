@@ -64,6 +64,9 @@ programs.git = {
 };
 
 
+programs.codex = {
+	enable = true;
+};
 
 programs.fastfetch = {
 	enable = true;
