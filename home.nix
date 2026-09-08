@@ -30,7 +30,7 @@
 				bg = "${./wallpaper.png} fill";
 			};
 			"eDP-1" = {
-				mode = "1920x1980";
+				mode = "1920x1080";
 				scale = "1.1";
 			};
 		};
@@ -63,6 +63,15 @@ programs.git = {
 
 
 
+programs.fastfetch = {
+	enable = true;
+};
+
+
+home.packages = with pkgs; [
+	wl-clipboard
+	cliphist
+];
 
  home.stateVersion = "26.05";
 
