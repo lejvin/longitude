@@ -1,4 +1,4 @@
-{ config, pkgs, ...}:
+{ config, pkgs, lib,  ...}:
 
 {
 
@@ -12,6 +12,13 @@
 	wrapperFeatures.gtk = true;
 	config = rec {
 		modifier = "Mod4";
+		keybindings = lib.mkOptionDefault {
+			"XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
+			"XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+		};
+		window = {
+			titlebar = false;
+		};
 		terminal = "foot";
 		input = {
 			"*" = {
