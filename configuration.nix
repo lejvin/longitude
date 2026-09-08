@@ -5,16 +5,24 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Enable the use of flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Use polkit
   security.polkit.enable = true;
+
+  environment.variables = {
+    EDITOR = "hx";
+    VISUAL = "hx";
+  };
 
   programs.dconf.enable = true;
 
@@ -30,18 +38,16 @@
     };
   };
 
-
   # Enable pipewire
   security.rtkit.enable = true;
 
   services.pipewire = {
-	enable = true;
-	alsa.enable = true;
-	pulse.enable = true;
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
   };
 
-
-  boot.resumeDevice ="/dev/disk/by-uuid/8bc819dc-1ad7-4692-8736-8f39c6a12c86";
+  boot.resumeDevice = "/dev/disk/by-uuid/8bc819dc-1ad7-4692-8736-8f39c6a12c86";
 
   services.logind.settings.Login = {
     HandleLidSwitch = "suspend-then-hibernate";
@@ -61,7 +67,7 @@
   fonts.enableDefaultPackages = true;
 
   # Enable hardware graphics
-  hardware.graphics.enable = true; 
+  hardware.graphics.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -113,8 +119,11 @@
   users.users."lukas" = {
     isNormalUser = true;
     description = "Lukas";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages
@@ -122,15 +131,12 @@
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
-    environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-     git
-     brightnessctl
-   ];
-
-
-  
+  environment.systemPackages = with pkgs; [
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    git
+    brightnessctl
+  ];
 
   programs.steam.enable = true;
   programs.gamemode.enable = true;
