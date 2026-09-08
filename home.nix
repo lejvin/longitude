@@ -25,6 +25,12 @@
 				xkb_layout = "se";
 			};
 		};
+		output = {
+			"eDP-1" = {
+				mode = "1920x1980";
+				scale = "1.1";
+			};
+		};
 	};
 };
 		
