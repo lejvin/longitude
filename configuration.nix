@@ -40,7 +40,7 @@
     AllowSuspend = true;
     AllowHibernation = true;
     AllowSuspendThenHibernate = true;
-    HibernateDelaySec = "1h";
+    HibernateDelaySec = "30m";
     HibernateOnACPower = true;
   };
 
