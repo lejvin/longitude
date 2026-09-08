@@ -26,6 +26,24 @@
 	pulse.enable = true;
   };
 
+
+  boot.resumeDevice ="/dev/disk/by-uuid/8bc819dc-1ad7-4692-8736-8f39c6a12c86";
+
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend-then-hibernate";
+    HandleLidSwitchExternalPower = "suspend-then-hibernate";
+    HandleLidSwitchDocked = "suspend-then-hibernate";
+    HandlePowerKey = "hibernate";
+  };
+
+  systemd.sleep.settings.Sleep = {
+    AllowSuspend = true;
+    AllowHibernation = true;
+    AllowSuspendThenHibernate = true;
+    HibernateDelaySec = "1h";
+    HibernateOnACPower = true;
+  };
+
   fonts.enableDefaultPackages = true;
 
   # Enable hardware graphics
@@ -33,6 +51,8 @@
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
+  # Keep the boot menu available with a shorter automatic boot delay.
+  boot.loader.timeout = 1;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
@@ -143,4 +163,3 @@
   system.stateVersion = "26.05"; # Did you read the comment?
 
 }
-
