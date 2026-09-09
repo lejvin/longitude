@@ -58,6 +58,9 @@
         "*" = {
           xkb_layout = "se";
         };
+        "type:touchpad" = {
+          natural_scroll = "enabled";
+        };
       };
       output = {
         "*" = {
