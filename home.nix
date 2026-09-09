@@ -229,6 +229,10 @@
     wl-clipboard
     cliphist
     playerctl
+    (python3.withPackages (ps: with ps; [
+      numpy
+      matplotlib
+    ]))
   ];
 
   home.stateVersion = "26.05";
