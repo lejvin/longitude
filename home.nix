@@ -224,15 +224,20 @@
     enable = true;
   };
 
+  programs.zathura = {
+    enable = true;
+  };
   home.packages = with pkgs; [
     xdg-utils
     wl-clipboard
     cliphist
     playerctl
-    (python3.withPackages (ps: with ps; [
-      numpy
-      matplotlib
-    ]))
+    (python3.withPackages (
+      ps: with ps; [
+        numpy
+        matplotlib
+      ]
+    ))
   ];
 
   home.stateVersion = "26.05";
