@@ -255,6 +255,9 @@
     wl-clipboard
     cliphist
     playerctl
+    qalculate-gtk
+    libqalculate
+    gnuplot
     (python3.withPackages (
       ps: with ps; [
         numpy
