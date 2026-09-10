@@ -31,6 +31,27 @@
     };
   };
 
+  programs.swaylock = {
+    enable = true;
+    settings.color = "1e1e2e";
+  };
+
+  services.swayidle = {
+    enable = true;
+    # Wait for swaylock to acquire the lock before allowing sleep.
+    extraArgs = [ "-w" ];
+    timeouts = [
+      {
+        timeout = 300;
+        command = "${pkgs.swaylock}/bin/swaylock -f";
+      }
+    ];
+    events = {
+      before-sleep = "${pkgs.swaylock}/bin/swaylock -f";
+      lock = "${pkgs.swaylock}/bin/swaylock -f";
+    };
+  };
+
   # Enable sway window manager
   wayland.windowManager.sway = {
     enable = true;
@@ -38,6 +59,7 @@
     config = {
       modifier = "Mod4";
       keybindings = lib.mkOptionDefault {
+        "Mod4+l" = "exec ${pkgs.swaylock}/bin/swaylock -f";
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
         "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
         "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";

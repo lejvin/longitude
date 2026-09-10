@@ -19,6 +19,9 @@
   # Use polkit
   security.polkit.enable = true;
 
+  # Allow swaylock to authenticate with the user password.
+  security.pam.services.swaylock = { };
+
   environment.variables = {
     EDITOR = "hx";
     VISUAL = "hx";
