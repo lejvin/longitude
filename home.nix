@@ -30,17 +30,6 @@
     style.name = "adwaita-dark";
   };
 
-  # Keep a warm screen tint all day, without requiring location access.
-  services.wlsunset = {
-    enable = true;
-    latitude = 63.8;
-    longitude = 20.3;
-    temperature = {
-      day = 5000;
-      night = 4000;
-    };
-  };
-
   programs.swaylock = {
     enable = true;
     settings.color = "1e1e2e";
@@ -52,7 +41,7 @@
     extraArgs = [ "-w" ];
     timeouts = [
       {
-        timeout = 300;
+        timeout = 600;
         command = "${pkgs.swaylock}/bin/swaylock -f";
       }
     ];
@@ -66,10 +55,10 @@
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
-    config = {
+    config = rec {
       modifier = "Mod4";
       keybindings = lib.mkOptionDefault {
-        "Mod4+l" = "exec ${pkgs.swaylock}/bin/swaylock -f";
+        "${modifier}+l" = "exec ${pkgs.swaylock}/bin/swaylock -f";
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
         "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
         "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
