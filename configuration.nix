@@ -28,6 +28,7 @@
   };
 
   programs.dconf.enable = true;
+  programs.thunar.enable = true;
 
   # Expose the desktop appearance preference to portal-aware applications.
   xdg.portal = {
