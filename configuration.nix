@@ -68,6 +68,8 @@
 
   # Enable hardware graphics
   hardware.graphics.enable = true;
+  # Enable hardware video decoding on the Intel GPU.
+  hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -132,6 +134,7 @@
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
+    wireguard-tools
     ripgrep
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
