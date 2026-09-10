@@ -19,6 +19,10 @@
   # Use polkit
   security.polkit.enable = true;
 
+  # Use tlp to conserve battery
+  services.tlp.enable = true;
+  services.power-profiles-daemon.enable = false;
+
   # Allow swaylock to authenticate with the user password.
   security.pam.services.swaylock = { };
 
