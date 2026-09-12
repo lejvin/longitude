@@ -16,6 +16,13 @@
     "flakes"
   ];
 
+  nix.optimise.automatic = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
   # Use polkit
   security.polkit.enable = true;
 
@@ -142,6 +149,7 @@
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
+    unrar
     wireguard-tools
     ripgrep
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.

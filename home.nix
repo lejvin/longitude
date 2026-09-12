@@ -1,5 +1,23 @@
 { pkgs, lib, ... }:
 
+let
+  clipboardHistory = pkgs.writeShellApplication {
+    name = "clipboard-history";
+    runtimeInputs = with pkgs; [
+      cliphist
+      fuzzel
+      wl-clipboard
+    ];
+    text = ''
+      if ! selection="$(cliphist list | fuzzel --dmenu --prompt 'Clipboard: ')"; then
+        exit 0
+      fi
+      if [[ -n "$selection" ]]; then
+        printf '%s\n' "$selection" | cliphist decode | wl-copy
+      fi
+    '';
+  };
+in
 {
 
   home.username = "lukas";
@@ -35,6 +53,14 @@
     settings.color = "1e1e2e";
   };
 
+  services.mako = {
+    enable = true;
+    settings.default-timeout = 5000;
+  };
+
+  services.cliphist.enable = true;
+  programs.fuzzel.enable = true;
+
   services.swayidle = {
     enable = true;
     # Wait for swaylock to acquire the lock before allowing sleep.
@@ -59,6 +85,7 @@
       modifier = "Mod4";
       keybindings = lib.mkOptionDefault {
         "${modifier}+l" = "exec ${pkgs.swaylock}/bin/swaylock -f";
+        "${modifier}+Shift+v" = "exec ${lib.getExe clipboardHistory}";
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
         "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
         "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
@@ -119,6 +146,10 @@
   programs.firefox = {
     enable = true;
   };
+
+  programs.swayimg.enable = true;
+
+  programs.mpv.enable = true;
 
   xdg.mimeApps = {
     enable = true;
@@ -252,7 +283,6 @@
   home.packages = with pkgs; [
     xdg-utils
     wl-clipboard
-    cliphist
     playerctl
     qalculate-gtk
     libqalculate
