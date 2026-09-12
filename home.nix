@@ -58,6 +58,8 @@ in
     settings.default-timeout = 5000;
   };
 
+  services.easyeffects.enable = true;
+
   services.cliphist.enable = true;
   programs.fuzzel.enable = true;
 
@@ -116,7 +118,7 @@ in
         };
         "eDP-1" = {
           mode = "1920x1080";
-          scale = "1.2";
+          scale = "1";
         };
       };
     };
