@@ -147,6 +147,11 @@ in
 
   programs.firefox = {
     enable = true;
+    # The UHD 620 lacks AV1 hardware decoding; software decoding stutters on live video.
+    policies.Preferences."media.av1.enabled" = {
+      Value = false;
+      Status = "locked";
+    };
   };
 
   programs.swayimg.enable = true;
@@ -283,6 +288,7 @@ in
     enable = true;
   };
   home.packages = with pkgs; [
+    gammastep
     xdg-utils
     wl-clipboard
     playerctl
