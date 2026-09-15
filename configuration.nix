@@ -16,6 +16,10 @@
     "flakes"
   ];
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+  };
   nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
@@ -71,11 +75,20 @@
     HandlePowerKey = "hibernate";
   };
 
+  # TEMPORARY FIX FOR BLUETOOTH ISSUE!!!
+  powerManagement.powerDownCommands = ''
+    ${pkgs.kmod}/bin/modprobe -r btusb
+  '';
+
+  powerManagement.resumeCommands = ''
+    ${pkgs.kmod}/bin/modprobe btusb
+  '';
+
   systemd.sleep.settings.Sleep = {
     AllowSuspend = true;
     AllowHibernation = true;
     AllowSuspendThenHibernate = true;
-    HibernateDelaySec = "30m";
+    HibernateDelaySec = "40m";
     HibernateOnACPower = true;
   };
 
