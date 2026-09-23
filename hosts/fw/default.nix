@@ -30,6 +30,10 @@
   # Use polkit
   security.polkit.enable = true;
 
+  # Store desktop application credentials and unlock them at console login.
+  services.gnome.gnome-keyring.enable = true;
+  programs.seahorse.enable = true;
+
   # Use tlp to conserve battery
   services.tlp.enable = true;
   services.power-profiles-daemon.enable = false;

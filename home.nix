@@ -23,6 +23,10 @@ in
   home.username = "lukas";
   home.homeDirectory = "/home/lukas";
 
+  # Let Firefox video playback inhibit Sway's idle timer directly.
+  # The GTK portal can report success without actually inhibiting idle on Sway.
+  home.sessionVariables.MOZ_WAKE_LOCK_TYPE = "WaylandIdleInhibit";
+
   home.pointerCursor = {
     enable = true;
     package = pkgs.adwaita-icon-theme;
@@ -58,6 +62,11 @@ in
     settings.default-timeout = 5000;
   };
 
+  services.nextcloud-client = {
+    enable = true;
+    startInBackground = true;
+  };
+
   services.easyeffects.enable = true;
 
   services.cliphist.enable = true;
@@ -85,9 +94,13 @@ in
     wrapperFeatures.gtk = true;
     config = rec {
       modifier = "Mod4";
+      bars = [ ];
       keybindings = lib.mkOptionDefault {
         "${modifier}+l" = "exec ${pkgs.swaylock}/bin/swaylock -f";
         "${modifier}+Shift+v" = "exec ${lib.getExe clipboardHistory}";
+        "Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy area";
+        "Shift+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy screen";
+        "${modifier}+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy active";
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
         "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
         "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
@@ -124,16 +137,72 @@ in
     };
   };
 
-  programs.i3status.enable = true;
-  programs.i3status.modules = {
-    "volume master" = {
-      position = 0;
-      settings = {
-        device = "pulse";
-        format = "♪ %volume";
-        format_muted = "♪ muted (%volume)";
+  programs.waybar = {
+    enable = true;
+    systemd.enable = true;
+    settings.mainBar = {
+      layer = "top";
+      position = "bottom";
+      height = 26;
+      modules-left = [
+        "sway/workspaces"
+        "sway/mode"
+      ];
+      modules-right = [
+        "pulseaudio"
+        "network"
+        "battery"
+        "disk"
+        "cpu"
+        "memory"
+        "clock"
+        "tray"
+      ];
+      pulseaudio = {
+        format = "Vol {volume}%";
+        format-muted = "Muted";
+        on-click = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+      };
+      network = {
+        format-wifi = "Wi-Fi {essid} {signalStrength}%";
+        format-ethernet = "LAN {ipaddr}";
+        format-disconnected = "Offline";
+      };
+      battery = {
+        format = "Bat {capacity}%";
+        format-charging = "Bat {capacity}% +";
+        states = {
+          warning = 20;
+          critical = 10;
+        };
+      };
+      disk = {
+        path = "/";
+        format = "Disk {free}";
+      };
+      cpu.format = "CPU {usage}%";
+      memory.format = "RAM {used:0.1f}G";
+      clock = {
+        format = "{:%Y-%m-%d %H:%M}";
+        tooltip-format = "{:%A, %d %B %Y}";
+      };
+      tray = {
+        icon-size = 20;
+        spacing = 8;
       };
     };
+    style = ''
+      * { font-family: monospace; font-size: 12px; }
+      window#waybar { background: #000000; color: #ffffff; }
+      #workspaces button { padding: 0 6px; border-radius: 0; color: #ffffff; }
+      #workspaces button.focused { background: #285577; }
+      #workspaces button.urgent, #battery.critical { background: #900000; }
+      #mode, #pulseaudio, #network, #battery, #disk, #cpu, #memory, #clock, #tray {
+        padding: 0 8px;
+      }
+      #tray menu { background: #222222; color: #ffffff; }
+      #tray menu menuitem:hover { background: #285577; }
+    '';
   };
 
   programs.foot = {
@@ -230,11 +299,16 @@ in
       enableUpdateCheck = false;
       enableExtensionUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
+        ms-toolsai.jupyter
+        tomoki1207.pdf
         catppuccin.catppuccin-vsc
         myriad-dreamin.tinymist
+        ms-python.python
+        ms-python.vscode-pylance
         jnoortheen.nix-ide
       ];
       userSettings = {
+        "chat.disableAIFeatures" = true;
         "workbench.colorTheme" = "Catppuccin Mocha";
         "editor.lineNumbers" = "relative";
         "editor.renderLineHighlight" = "all";
@@ -288,10 +362,12 @@ in
     enable = true;
   };
   home.packages = with pkgs; [
+    nextcloud-client
     qbittorrent
     gammastep
     xdg-utils
     wl-clipboard
+    sway-contrib.grimshot
     playerctl
     qalculate-gtk
     libqalculate
