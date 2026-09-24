@@ -1,6 +1,17 @@
 { pkgs, lib, ... }:
 
 let
+  pythonEnv = pkgs.python3.withPackages (
+    ps: with ps; [
+      scipy
+      numpy
+      matplotlib
+      pip
+      jupyter
+      notebook
+      ipykernel
+    ]
+  );
   clipboardHistory = pkgs.writeShellApplication {
     name = "clipboard-history";
     runtimeInputs = with pkgs; [
@@ -303,10 +314,12 @@ in
         catppuccin.catppuccin-vsc
         myriad-dreamin.tinymist
         ms-python.python
+        ms-python.debugpy
         ms-python.vscode-pylance
         jnoortheen.nix-ide
       ];
       userSettings = {
+        "python.defaultInterpreterPath" = "${pythonEnv}/bin/python3";
         "chat.disableAIFeatures" = true;
         "workbench.colorTheme" = "Catppuccin Mocha";
         "editor.lineNumbers" = "relative";
@@ -371,12 +384,7 @@ in
     qalculate-gtk
     libqalculate
     gnuplot
-    (python3.withPackages (
-      ps: with ps; [
-        numpy
-        matplotlib
-      ]
-    ))
+    pythonEnv
   ];
 
   home.stateVersion = "26.05";
