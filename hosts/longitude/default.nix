@@ -20,6 +20,9 @@
     enable = true;
     powerOnBoot = false;
   };
+  services.blueman.enable = true;
+  services.upower.enable = true;
+
   nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
@@ -79,6 +82,8 @@
     HandlePowerKey = "hibernate";
   };
 
+  powerManagement.enable = true;
+
   # TEMPORARY FIX FOR BLUETOOTH ISSUE!!!
   powerManagement.powerDownCommands = ''
     ${pkgs.kmod}/bin/modprobe -r btusb
@@ -96,7 +101,13 @@
     HibernateOnACPower = true;
   };
 
-  fonts.enableDefaultPackages = true;
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      corefonts
+      comic-relief
+    ];
+  };
 
   # Enable hardware graphics
   hardware.graphics.enable = true;
@@ -176,6 +187,8 @@
     wget
     git
     brightnessctl
+    yt-dlp
+    ffmpeg
   ];
 
   programs.steam.enable = true;

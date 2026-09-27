@@ -374,6 +374,7 @@ in
     enable = true;
   };
   home.packages = with pkgs; [
+    gimp
     nextcloud-client
     qbittorrent
     gammastep
