@@ -5,11 +5,13 @@ let
     ps: with ps; [
       scipy
       numpy
+      pandas
       matplotlib
       pip
       jupyter
       notebook
       ipykernel
+      debugpy
     ]
   );
   clipboardHistory = pkgs.writeShellApplication {
@@ -103,6 +105,9 @@ in
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
+    extraConfig = ''
+      popup_during_fullscreen smart
+    '';
     config = rec {
       modifier = "Mod4";
       bars = [ ];
