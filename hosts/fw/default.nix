@@ -111,6 +111,9 @@
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Disable AMD's adaptive backlight management, which can wash out panel
+  # colors when running on battery.
+  boot.kernelParams = [ "amdgpu.abmlevel=0" ];
 
   networking.hostName = "fw"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
