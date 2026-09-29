@@ -32,7 +32,12 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.lukas = ./home.nix;
+              home-manager.users.lukas = {
+                imports = [
+                  ./home.nix
+                  ./hosts/fw/home.nix
+                ];
+              };
             }
           ];
         };

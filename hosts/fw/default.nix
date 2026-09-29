@@ -70,7 +70,7 @@
     pulse.enable = true;
   };
 
-  boot.resumeDevice = "/dev/disk/by-uuid/8bc819dc-1ad7-4692-8736-8f39c6a12c86";
+  boot.resumeDevice = "/dev/disk/by-uuid/a5dd80ee-c0d0-46d4-9a06-93fd22e2a697";
 
   services.logind.settings.Login = {
     HandleLidSwitch = "suspend-then-hibernate";
