@@ -34,9 +34,9 @@
   services.gnome.gnome-keyring.enable = true;
   programs.seahorse.enable = true;
 
-  # Use tlp to conserve battery
-  services.tlp.enable = true;
-  services.power-profiles-daemon.enable = false;
+  # Use power profiles daemon to conserve battery
+  services.tlp.enable = false;
+  services.power-profiles-daemon.enable = true;
 
   # Allow swaylock to authenticate with the user password.
   security.pam.services.swaylock = { };
