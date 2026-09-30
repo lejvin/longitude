@@ -14,6 +14,7 @@
 
   outputs =
     {
+      stable,
       unstable,
       home-manager,
       nixos-hardware,
@@ -33,6 +34,7 @@
             }
           ];
         };
+
         fw = unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
@@ -49,6 +51,13 @@
                 ];
               };
             }
+          ];
+        };
+
+        fractal = stable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/fractal
           ];
         };
       };

@@ -8,6 +8,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ../../common.nix
   ];
 
   # Enable the use of flakes
@@ -78,7 +79,7 @@
   services.logind.settings.Login = {
     HandleLidSwitch = "suspend-then-hibernate";
     HandleLidSwitchExternalPower = "suspend-then-hibernate";
-    HandleLidSwitchDocked = "suspend-then-hibernate";
+    HandleLidSwitchDocked = "ignore";
     HandlePowerKey = "hibernate";
   };
 
@@ -187,6 +188,8 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     git
+    typst
+    hayagriva
     brightnessctl
     yt-dlp
     ffmpeg
