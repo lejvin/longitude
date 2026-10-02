@@ -34,4 +34,35 @@
     LC_TIME = "sv_SE.UTF-8";
   };
 
+  services.geoclue2.enable = true;
+  location.provider = "geoclue2";
+
+  programs.thunar.enable = true;
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
+  programs.xfconf.enable = true;
+  programs.obs-studio.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    wlr = {
+      enable = true;
+      settings = {
+        screencast = {
+          chooser_type = "simple";
+          chooser_cmd = "${pkgs.slurp}/bin/slurp -f 'Monitor: %o' -or";
+        };
+      };
+    };
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.sway = {
+      default = [ "gtk" ];
+      "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+      "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+    };
+  };
+
+  environment.systemPackages = with pkgs; [
+    slurp
+  ];
 }

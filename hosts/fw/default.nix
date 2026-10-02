@@ -10,12 +10,6 @@
     ./hardware-configuration.nix
   ];
 
-  # Enable the use of flakes
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = false;
@@ -52,7 +46,15 @@
   # Expose the desktop appearance preference to portal-aware applications.
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
+    wlr = {
+      enable = true;
+      settings = {
+        screencast = {
+          chooser_type = "simple";
+          chooser_cmd = "${pkgs.slurp}/bin/slurp -f 'Monitor: %o' -or";
+        };
+      };
+    };
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     config.sway = {
       default = [ "gtk" ];
@@ -60,7 +62,7 @@
       "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
     };
   };
-
+  services.dbus.enable = true;
   # Enable pipewire
   security.rtkit.enable = true;
 
@@ -68,6 +70,7 @@
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
+    alsa.suppot32Bit = true;
   };
 
   boot.resumeDevice = "/dev/disk/by-uuid/a5dd80ee-c0d0-46d4-9a06-93fd22e2a697";
@@ -200,11 +203,6 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

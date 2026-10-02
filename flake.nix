@@ -4,8 +4,10 @@
   inputs = {
     stable.url = "github:nixos/nixpkgs/nixos-26.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "unstable";
+    };
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
       inputs.nixpkgs.follows = "unstable";
@@ -58,6 +60,24 @@
           system = "x86_64-linux";
           modules = [
             ./hosts/fractal
+          ];
+        };
+
+        arnold = unstable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/arnold
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.lukas = {
+                imports = [
+                  ./home.nix
+
+                ];
+              };
+            }
           ];
         };
       };
