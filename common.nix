@@ -64,5 +64,6 @@
 
   environment.systemPackages = with pkgs; [
     slurp
+    elmerfem
   ];
 }

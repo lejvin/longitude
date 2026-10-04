@@ -337,6 +337,8 @@ in
     gnuplot
     pythonEnv
     freecad
+    gmsh
+    netgen
   ];
 
   home.stateVersion = "26.05";
