@@ -19,6 +19,7 @@ in
 
   imports = [
     ./sway.nix
+    ./thunderbird.nix
   ];
 
   home.username = "lukas";
