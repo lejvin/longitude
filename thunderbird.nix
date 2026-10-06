@@ -10,4 +10,9 @@
     ];
 
   };
+
+  xdg.autostart = {
+    enable = true;
+    entries = [ "${pkgs.thunderbird}/share/applications/thunderbird.desktop" ];
+  };
 }

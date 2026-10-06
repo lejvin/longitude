@@ -323,6 +323,10 @@ in
 
   programs.zathura = {
     enable = true;
+    options = {
+      selection-clipboard = false;
+      selection-notification = false;
+    };
   };
   home.packages = with pkgs; [
     gimp
@@ -333,6 +337,7 @@ in
     wl-clipboard
     sway-contrib.grimshot
     playerctl
+    remmina
     qalculate-gtk
     libqalculate
     gnuplot
